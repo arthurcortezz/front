@@ -23,7 +23,7 @@ export class RecipesService {
     data: RecipeInterface
   ): Observable<{ message: string; user: RecipeInterface }> {
     return this.httpClient.post<{ message: string; user: RecipeInterface }>(
-      '@acs-api/recipe',
+      '@acs-api/recipe/create',
       data
     );
   }

@@ -105,12 +105,12 @@
                   <mat-label class="font-bold">Quantidade</mat-label>
                   <input
                     placeholder="Digite a quantidade em relação a unidade de medida"
-                    formControlName="unitValue"
+                    formControlName="unityValue"
                     matInput
                     type="number"
                   />
                   <mat-error
-                    *ngIf="ingredient.get('unitValue').hasError('required')"
+                    *ngIf="ingredient.get('unityValue').hasError('required')"
                   >
                     A quantidade é obrigatória.
                   </mat-error>
@@ -118,15 +118,17 @@
                 <mat-form-field class="w-1/2 pl-4">
                   <mat-label class="font-bold">Unidade de medida</mat-label>
                   <mat-select
-                    formControlName="unitType"
+                    formControlName="unityType"
                     placeholder="Unidade de medida"
                   >
-                    <mat-option value="kg">Colher de sopa</mat-option>
-                    <mat-option value="URL">Colher de açucar</mat-option>
-                    <mat-option value="QUICK_REPLY">Gramas</mat-option>
+                    <mat-option
+                      *ngFor="let unityType of unityTypes"
+                      [value]="unityType.id"
+                      >{{ unityType.name }}</mat-option
+                    >
                   </mat-select>
                   <mat-error
-                    *ngIf="ingredient.get('unitType').hasError('required')"
+                    *ngIf="ingredient.get('unityType').hasError('required')"
                   >
                     A unidade de medida é obrigatória.
                   </mat-error>

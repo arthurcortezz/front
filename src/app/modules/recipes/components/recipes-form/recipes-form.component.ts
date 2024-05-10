@@ -13,6 +13,8 @@ import { RecipeInterface } from '../../recipes.types';
 import { RecipesService } from '../../recipes.service';
 import { CategoryInterface } from '../../../admin/categories/categories.types';
 import { CategoriesService } from 'src/app/modules/admin/categories/categories.service';
+import { UnityTypeInterface } from 'src/app/modules/admin/unity-types/unity-types.types';
+import { UnityTypeService } from 'src/app/modules/admin/unity-types/unity-types.service';
 
 @Component({
   selector: 'recipes-form',
@@ -41,6 +43,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   public form: UntypedFormGroup;
   public recipe: RecipeInterface;
   public selectedFileName: string = '';
+  public unityTypes: UnityTypeInterface[];
   public categories: CategoryInterface[];
 
   private readonly unsubscribeAll: Subject<any> = new Subject<any>();
@@ -51,7 +54,8 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     private readonly toastService: AcsToastService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly formBuilder: UntypedFormBuilder,
-    private readonly categoryService: CategoriesService
+    private readonly categoryService: CategoriesService,
+    private readonly unityTypeService: UnityTypeService
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +82,9 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
 
     this.categoryService.findAll().subscribe((res) => {
       this.categories = res.rows;
+    });
+    this.unityTypeService.findAll().subscribe((res) => {
+      this.unityTypes = res.rows;
     });
   }
 
@@ -149,8 +156,8 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
       this.formBuilder.group({
         image: ['', []],
         name: ['', [Validators.required]],
-        unitType: ['', [Validators.required]],
-        unitValue: ['', [Validators.required]],
+        unityType: ['', [Validators.required]],
+        unityValue: ['', [Validators.required]],
       })
     );
   }

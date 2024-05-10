@@ -76,12 +76,6 @@
         </button>
         <mat-error>A senha é obrigatória.</mat-error>
       </mat-form-field>
-
-      <div class="inline-flex items-center justify-between w-full mt-1.5">
-        <a class="text-white font-bold" [routerLink]="['/esqueci-minha-senha']"
-          >Esqueceu sua senha?
-        </a>
-      </div>
       <button
         type="submit"
         class="w-full mt-4 bg-primary-50 text-white font-bold"
@@ -93,7 +87,7 @@
           'bg-gray-300': signUpForm.invalid
         }"
       >
-        <span *ngIf="!signUpForm.disabled">Entrar</span>
+        <span *ngIf="!signUpForm.disabled">Cadastrar</span>
         <mat-progress-spinner
           *ngIf="signUpForm.disabled"
           [diameter]="24"
