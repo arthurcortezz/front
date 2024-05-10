@@ -87,7 +87,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   }
 
   handleSaveOrUpdate(): void {
-    // this.form.disable();
+    this.form.disable();
     const formValue = {
       ...this.form.value,
     };
@@ -115,32 +115,28 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      // this.service
-      //   .create(formValue)
-      //   .pipe(
-      //     takeUntil(this.unsubscribeAll),
-      //     finalize(() => {
-      //       this.form.enable();
-      //     })
-      //   )
-      //   .subscribe({
-      //     next: (res) => {
-      //       this.toastService.handleMessage(res, null, { handleRequest: true });
-      //       this.router.navigateByUrl('receitas');
-      //     },
-      //     error: (error) => {
-      //       this.toastService.handleMessage(
-      //         error,
-      //         'Não foi possível criar a receita.',
-      //         { handleRequest: true }
-      //       );
-      //     },
-      //   });
+      this.service
+        .create(formValue)
+        .pipe(
+          takeUntil(this.unsubscribeAll),
+          finalize(() => {
+            this.form.enable();
+          })
+        )
+        .subscribe({
+          next: (res) => {
+            this.toastService.handleMessage(res, null, { handleRequest: true });
+            this.router.navigateByUrl('receitas');
+          },
+          error: (error) => {
+            this.toastService.handleMessage(
+              error,
+              'Não foi possível criar a receita.',
+              { handleRequest: true }
+            );
+          },
+        });
     }
-    console.log(
-      '🚀 ~ RecipesFormComponent ~ handleSaveOrUpdate ~ formValue:',
-      formValue
-    );
   }
 
   getIngredientsForm(): UntypedFormArray {
