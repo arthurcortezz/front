@@ -37,6 +37,7 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
     });
 
     this.activatedRoute.paramMap.subscribe((params) => {
+      this.id = params.get('id');
       if (this.id) {
         void this.service
           .findOne(this.id)
