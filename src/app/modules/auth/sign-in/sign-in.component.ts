@@ -18,7 +18,7 @@ import { AuthService } from '../../../core/auth/auth.service';
   styles: [
     `
       .mat-mdc-form-field-flex {
-        background: navajowhite;
+        background: white;
       }
       .mdc-text-field {
         border: 1px solid white;
@@ -26,7 +26,7 @@ import { AuthService } from '../../../core/auth/auth.service';
       .mdc-text-field {
         .mdc-floating-label {
           .mat-mdc-form-field-required-marker {
-            color: #e3651d;
+            color: black;
           }
         }
       }

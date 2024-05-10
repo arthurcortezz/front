@@ -1,10 +1,5 @@
 <div
-  style="
-    background-position: center;
-    background-image: url('assets/images/auth/login-bg.jpg');
-    background-size: cover;
-  "
-  class="w-screen h-screen grid items-center justify-center text-secondary-300"
+  class="bg-noise bg-hero-image bg-center w-screen h-screen grid items-center justify-center text-white"
 >
   <div
     class="bg-blend-multiply backdrop-blur-2xl border-gray-50 border-2 rounded-lg bg-opacity-25 bg-transparent w-full max-w-120 justify-start p-10"
@@ -14,7 +9,7 @@
       <span class="text-md">
         Não tem uma conta?
         <a
-          class="text-primary-300 cursor-pointer hover:underline"
+          class="text-gray-300 cursor-pointer hover:underline"
           [routerLink]="['/registrar']"
           >Cadastre-se aqui.</a
         >
@@ -28,8 +23,9 @@
       (ngSubmit)="signIn()"
     >
       <mat-form-field class="w-full mb-2">
-        <mat-label class="font-bold text-secondary-300">E-mail</mat-label>
+        <mat-label class="font-bold text-white">E-mail</mat-label>
         <input
+          class="text-black"
           name="email"
           id="email"
           placeholder="Digite aqui"
@@ -45,9 +41,9 @@
       </mat-form-field>
 
       <mat-form-field class="w-full">
-        <mat-label class="font-bold text-secondary-300">Senha</mat-label>
+        <mat-label class="font-bold text-white">Senha</mat-label>
         <input
-          style="background: none !important"
+          class="text-black"
           name="password"
           id="password"
           placeholder="•••••••••••••••••••••"
@@ -75,12 +71,7 @@
       </mat-form-field>
 
       <div class="inline-flex items-center justify-between w-full mt-1.5">
-        <mat-checkbox [color]="'primary'">
-          <span class="text-secondary-300"> Lembrar senha </span>
-        </mat-checkbox>
-        <a
-          class="text-primary-300 font-bold"
-          [routerLink]="['/esqueci-minha-senha']"
+        <a class="text-white font-bold" [routerLink]="['/esqueci-minha-senha']"
           >Esqueceu sua senha?
         </a>
       </div>
@@ -106,7 +97,7 @@
         (click)="clickBack()"
       >
         <mat-icon [svgIcon]="'uil:back-arrow'"></mat-icon>
-        <span class="ml-4 text-secondary-600">Voltar</span>
+        <span class="ml-4 text-white">Voltar</span>
       </button>
     </div>
   </div>
