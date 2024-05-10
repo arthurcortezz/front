@@ -10,6 +10,13 @@ export interface LoginBodyInterface {
   password: string;
 }
 
+export interface RegisterBodyInterface {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
 export interface ForgotPasswordResponseInterface {
   message: string;
 }

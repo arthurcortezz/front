@@ -21,6 +21,13 @@ export const appRoutes: Route[] = [
             (m) => m.AuthSignInModule
           ),
       },
+      {
+        path: 'registrar',
+        loadChildren: () =>
+          import('./modules/auth/sign-up/sign-up.module').then(
+            (m) => m.AuthSignUpModule
+          ),
+      },
     ],
   },
   { path: '-', pathMatch: 'full', redirectTo: 'receitas' },
@@ -41,7 +48,7 @@ export const appRoutes: Route[] = [
         },
         loadChildren: () =>
           import('./modules/admin/users/users.module').then(
-            (u) => u.UsersModule
+            (m) => m.UsersModule
           ),
       },
       {
@@ -53,7 +60,7 @@ export const appRoutes: Route[] = [
         },
         loadChildren: () =>
           import('./modules/admin/categories/categories.module').then(
-            (r) => r.CategoriesModule
+            (m) => m.CategoriesModule
           ),
       },
       {
@@ -65,7 +72,7 @@ export const appRoutes: Route[] = [
         },
         loadChildren: () =>
           import('./modules/recipes/recipes.module').then(
-            (r) => r.RecipesModule
+            (m) => m.RecipesModule
           ),
       },
       {
@@ -77,7 +84,7 @@ export const appRoutes: Route[] = [
         },
         loadChildren: () =>
           import('./modules/admin/unity-types/unity-types.module').then(
-            (u) => u.UnityTypesModule
+            (m) => m.UnityTypesModule
           ),
       },
     ],

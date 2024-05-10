@@ -5,37 +5,44 @@
     class="bg-blend-multiply backdrop-blur-2xl border-gray-50 border-2 rounded-lg bg-opacity-25 bg-transparent w-full max-w-120 justify-start p-10"
   >
     <div class="text-lg font-bold tracking-tight leading-tight">
-      <p>Acesse sua conta</p>
-      <span class="text-md">
-        Não tem uma conta?
-        <a
-          class="text-gray-300 cursor-pointer hover:underline"
-          [routerLink]="['/registrar']"
-          >Cadastre-se aqui.</a
-        >
-      </span>
+      <p>Crie sua conta</p>
     </div>
 
     <form
       class="mt-8"
-      #signInNgForm="ngForm"
-      [formGroup]="signInForm"
-      (ngSubmit)="signIn()"
+      #signUpNgForm="ngForm"
+      [formGroup]="signUpForm"
+      (ngSubmit)="signUp()"
     >
+      <mat-form-field class="w-full mb-2">
+        <mat-label class="font-bold text-white">Nome</mat-label>
+        <input
+          class="text-black"
+          name="name"
+          id="name"
+          placeholder="Digite aqui o seu nome"
+          formControlName="name"
+          matInput
+        />
+        <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+          O nome é obrigatório
+        </mat-error>
+      </mat-form-field>
+
       <mat-form-field class="w-full mb-2">
         <mat-label class="font-bold text-white">E-mail</mat-label>
         <input
           class="text-black"
           name="email"
           id="email"
-          placeholder="Digite aqui"
+          placeholder="Digite aqui o seu e-mail mais utilizado"
           formControlName="email"
           matInput
         />
-        <mat-error *ngIf="signInForm.get('email').hasError('required')">
+        <mat-error *ngIf="signUpForm.get('email').hasError('required')">
           O e-mail é obrigatório
         </mat-error>
-        <mat-error *ngIf="signInForm.get('email').hasError('email')">
+        <mat-error *ngIf="signUpForm.get('email').hasError('email')">
           Por favor insira um e-mail válido.
         </mat-error>
       </mat-form-field>
@@ -69,20 +76,26 @@
         </button>
         <mat-error>A senha é obrigatória.</mat-error>
       </mat-form-field>
+
+      <div class="inline-flex items-center justify-between w-full mt-1.5">
+        <a class="text-white font-bold" [routerLink]="['/esqueci-minha-senha']"
+          >Esqueceu sua senha?
+        </a>
+      </div>
       <button
         type="submit"
         class="w-full mt-4 bg-primary-50 text-white font-bold"
         color="primary"
         mat-flat-button
-        [disabled]="signInForm.invalid"
+        [disabled]="signUpForm.invalid"
         [ngClass]="{
-          'bg-primary-50': !signInForm.invalid,
-          'bg-gray-300': signInForm.invalid
+          'bg-primary-50': !signUpForm.invalid,
+          'bg-gray-300': signUpForm.invalid
         }"
       >
-        <span *ngIf="!signInForm.disabled">Cadastrar</span>
+        <span *ngIf="!signUpForm.disabled">Entrar</span>
         <mat-progress-spinner
-          *ngIf="signInForm.disabled"
+          *ngIf="signUpForm.disabled"
           [diameter]="24"
           [mode]="'indeterminate'"
         ></mat-progress-spinner>

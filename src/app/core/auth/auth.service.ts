@@ -10,6 +10,7 @@ import {
   ForgotPasswordResponseInterface,
   LoginBodyInterface,
   LoginResponseInterface,
+  RegisterBodyInterface,
   ResetPasswordBodyInterface,
   ResetPasswordResponseInterface,
 } from './auth.types';
@@ -39,6 +40,26 @@ export class AuthService {
     }
 
     return this.httpClient.post('@acs-api/auth/signin', credentials).pipe(
+      switchMap((response: LoginResponseInterface) => {
+        if (response && response.accessToken && response.user) {
+          this.authenticated = true;
+          this.accessToken = response.accessToken;
+          this.userService.user = response.user;
+        }
+
+        return of(response);
+      })
+    );
+  }
+
+  public signUp(
+    credentials: RegisterBodyInterface
+  ): Observable<LoginResponseInterface> {
+    if (this.authenticated) {
+      return throwError(() => 'O usuário já está conectado.');
+    }
+
+    return this.httpClient.post('@acs-api/auth/signup', credentials).pipe(
       switchMap((response: LoginResponseInterface) => {
         if (response && response.accessToken && response.user) {
           this.authenticated = true;
