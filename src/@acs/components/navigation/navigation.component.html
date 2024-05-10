@@ -1,0 +1,23 @@
+<div class="acs-navigation">
+  <div class="acs-navigation-header">
+    <ng-content select="[acsNavigationHeader]"></ng-content>
+  </div>
+  <div class="acs-navigation-container">
+    <div class="acs-navigation-content">
+      <div
+        *ngFor="let item of navigation; trackBy: trackByFn"
+        [matTooltip]="hovered ? item.menu : ''"
+        matTooltipPosition="right"
+        [matTooltipDisabled]="!hovered"
+      >
+        <acs-navigation-item
+          [item]="item"
+          [hovered]="hovered"
+        ></acs-navigation-item>
+      </div>
+    </div>
+  </div>
+  <acs-navigation-switcher-mode
+    [hovered]="hovered"
+  ></acs-navigation-switcher-mode>
+</div>

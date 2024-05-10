@@ -1,0 +1,171 @@
+<div class="flex flex-col flex-auto min-w-0 h-full">
+  <acs-header
+    [title]="id ? 'Modificar uma receita existente' : 'Criar uma nova receita'"
+  ></acs-header>
+  <div class="px-6 pb-6 w-full xl:w-1/2 mt-0 mb-0">
+    <div class="bg-card rounded-md border dark:border-slate-800 p-4">
+      <form [formGroup]="form">
+        <h1 class="font-bold text-lg mb-4">Dados da receita</h1>
+        <mat-form-field class="w-full">
+          <mat-label class="font-bold">Nome</mat-label>
+          <input
+            formControlName="name"
+            matInput
+            placeholder="Digite o nome da receita"
+          />
+          <mat-error *ngIf="form.get('name').hasError('required')">
+            O nome é obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label class="font-bold">Descrição</mat-label>
+          <input
+            matInput
+            formControlName="description"
+            placeholder="Digite a descrição da receita"
+          />
+          <mat-error *ngIf="form.get('description').hasError('required')">
+            A descrição é obrigatória.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label class="font-bold">Categoria</mat-label>
+          <mat-select
+            formControlName="category"
+            placeholder="Selecione a categoria da receita"
+          >
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category.id"
+            >
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('category').hasError('required')">
+            A categoria da receita é obrigatória.
+          </mat-error>
+        </mat-form-field>
+        <div class="flex mb-4 w-full justify-between">
+          <h1 class="font-bold text-lg">Ingredientes</h1>
+          <button mat-button class="bg-default" (click)="addNewIngredient()">
+            Adicionar +
+          </button>
+        </div>
+        <div
+          class="flex w-full justify-center"
+          *ngIf="!form.get('ingredients').value.length"
+        >
+          Nenhum ingrediente cadastrado.
+        </div>
+        <div formArrayName="ingredients">
+          <div
+            *ngFor="
+              let ingredient of getIngredientsForm().controls;
+              let i = index
+            "
+          >
+            <div [formGroupName]="i" class="grid items-center">
+              <div class="flex w-full">
+                <mat-form-field class="w-1/2 pr-4 mb-4">
+                  <mat-label class="font-bold">Nome</mat-label>
+                  <input
+                    matInput
+                    formControlName="name"
+                    placeholder="Nome do ingrediente."
+                  />
+                  <mat-error
+                    *ngIf="ingredient.get('name').hasError('required')"
+                  >
+                    O nome do ingrediente é obrigatório.
+                  </mat-error>
+                </mat-form-field>
+                <div class="w-1/2 pl-4 grid h-fit mb-4">
+                  <label class="font-bold">Imagem do ingrediente</label>
+                  <label for="image" class="custom-file-upload">
+                    Escolher arquivo
+                  </label>
+                  <input
+                    id="image"
+                    type="file"
+                    name="image"
+                    accept=".png"
+                    style="display: none"
+                    (change)="onFileChange($event)"
+                  />
+                  <p *ngIf="selectedFileName">
+                    Arquivo selecionado: {{ selectedFileName }}
+                  </p>
+                  <p *ngIf="!selectedFileName">
+                    Selecione um arquivo de imagem .png
+                  </p>
+                </div>
+              </div>
+              <div class="flex w-full">
+                <mat-form-field class="w-1/2 pr-4">
+                  <mat-label class="font-bold">Quantidade</mat-label>
+                  <input
+                    placeholder="Digite a quantidade em relação a unidade de medida"
+                    formControlName="unitValue"
+                    matInput
+                    type="number"
+                  />
+                  <mat-error
+                    *ngIf="ingredient.get('unitValue').hasError('required')"
+                  >
+                    A quantidade é obrigatória.
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-4">
+                  <mat-label class="font-bold">Unidade de medida</mat-label>
+                  <mat-select
+                    formControlName="unitType"
+                    placeholder="Unidade de medida"
+                  >
+                    <mat-option value="kg">Colher de sopa</mat-option>
+                    <mat-option value="URL">Colher de açucar</mat-option>
+                    <mat-option value="QUICK_REPLY">Gramas</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="ingredient.get('unitType').hasError('required')"
+                  >
+                    A unidade de medida é obrigatória.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <mat-icon
+                (click)="deleteIngredientForm(i)"
+                class="hover:bg-gray-200 bg-opacity-10 cursor-pointer w-full rounded-lg max-h-12"
+                [svgIcon]="'mat_outline:delete'"
+              ></mat-icon>
+              <mat-divider class="my-4"></mat-divider>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="flex flex-row gap-6">
+      <button
+        class="w-full mt-6"
+        mat-flat-button
+        [disabled]="form.disabled"
+        [routerLink]="'/receitas'"
+      >
+        Cancelar
+      </button>
+      <button
+        class="w-full mt-6"
+        mat-flat-button
+        color="primary"
+        [disabled]="form.invalid"
+        (click)="handleSaveOrUpdate()"
+      >
+        <span *ngIf="!form.disabled">Salvar</span>
+        <mat-progress-spinner
+          *ngIf="form.disabled"
+          [diameter]="24"
+          [mode]="'indeterminate'"
+        ></mat-progress-spinner>
+      </button>
+    </div>
+  </div>
+</div>

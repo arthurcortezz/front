@@ -1,0 +1,49 @@
+<section
+  id="projects"
+  class="p-4 sm:p-16 md:p-16 lg:p-16 xl:p-16 text-white opacity-0 transition-all duration-[1500ms] ease-in-out"
+>
+  <div
+    class="grid max-w-screen-xl px-4 py-8 mx-auto gap-4 mt-14 light:text-black dark:text-gray-50"
+  >
+    <h2
+      class="font-bold max-w-2xl text-xl tracking-tight leading-none md:text-2xl xl:text-3xl break-keep"
+    >
+      Feedbacks dos nossos usuários
+    </h2>
+    <div class="flex items-center relative">
+      <mat-tab-group
+        [(selectedIndex)]="currentIndex"
+        class="max-w-screen w-full"
+      >
+        <mat-tab *ngFor="let project of projects">
+          <div class="flex p-8">
+            <img
+              [src]="project.image"
+              alt="project.name"
+              class="w-1/4 h-1/4 mt-22"
+            />
+            <div
+              class="w-full h-fit px-4 p-4 border-gray-800 speech-bubble"
+              style="background-color: rgba(0, 0, 0, 0.2); color: white"
+            >
+              <h3 class="text-md font-bold">{{ project.name }}</h3>
+              <p class="text-sm">{{ project.description }}</p>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <button
+        (click)="prev()"
+        class="bg-white bg-opacity-10 text-white px-4 py-2 rounded-full absolute xl:bottom-1/2 xl:-left-16 -bottom-10 left-20"
+      >
+        <
+      </button>
+      <button
+        (click)="next()"
+        class="bg-white bg-opacity-10 text-white px-4 py-2 rounded-full absolute xl:bottom-1/2 xl:-right-16 -bottom-10 right-20"
+      >
+        >
+      </button>
+    </div>
+  </div>
+</section>

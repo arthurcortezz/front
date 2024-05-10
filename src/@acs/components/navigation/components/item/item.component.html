@@ -1,0 +1,25 @@
+<a
+  class="acs-navigation-item-wrapper"
+  [routerLink]="[item.route]"
+  [routerLinkActive]="'acs-navigation-item-active'"
+>
+  <ng-container>
+    <a class="acs-navigation-item">
+      <ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+    </a>
+  </ng-container>
+</a>
+
+<ng-template #itemTemplate>
+  <ng-container *ngIf="item.icon">
+    <mat-icon class="acs-navigation-item-icon" [svgIcon]="item.icon"></mat-icon>
+  </ng-container>
+
+  <div class="acs-navigation-item-title-wrapper">
+    <div class="acs-navigation-item-title">
+      <span *ngIf="hovered" [@fadeInLeft]="hovered">
+        {{ item.menu }}
+      </span>
+    </div>
+  </div>
+</ng-template>

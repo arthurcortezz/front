@@ -1,0 +1,44 @@
+<acs-loading-bar></acs-loading-bar>
+
+<acs-navigation
+  class="bg-app-bar border-color border-r print:hidden fixed"
+  [navigation]="navigation"
+  (hoveredEvent)="handleHovered($event)"
+>
+  <ng-container acsNavigationHeader>
+    <div
+      class="flex items-center justify-center h-20 border-b border-color"
+      [ngClass]="!hovered && 'p-4'"
+    >
+      <mat-icon
+        class="w-full h-full"
+        [ngClass]="!hovered ? 'h-8 scale-150' : 'h-7'"
+        [svgIcon]="'uil:restaurant'"
+      ></mat-icon>
+    </div>
+  </ng-container>
+</acs-navigation>
+
+<div class="absolute pl-[70px] w-full h-full overflow-y-scroll">
+  <div class="flex flex-col flex-auto w-full min-w-0">
+    <div
+      class="relative flex flex-0 items-center w-full h-20 px-7 border-b border-color z-49 dark:shadow-none bg-app-bar print:hidden"
+    >
+      <div class="flex items-center pr-2 space-x-2">
+        <h2 class="font-semibold text-lg flex flex-col">
+          {{ title }}
+          <span class="font-normal text-sm" *ngIf="companyTitle">{{
+            companyTitle
+          }}</span>
+        </h2>
+      </div>
+      <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+        <user></user>
+      </div>
+    </div>
+
+    <div class="flex flex-col flex-auto">
+      <router-outlet *ngIf="true"></router-outlet>
+    </div>
+  </div>
+</div>

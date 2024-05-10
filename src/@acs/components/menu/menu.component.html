@@ -1,0 +1,55 @@
+<header
+  style="border-bottom: 1px solid"
+  class="bg-transparent border-gray-800 bg-blend-multiply fixed w-full top-0 z-50 backdrop-blur-2xl"
+>
+  <nav
+    class="w-full md:mx-auto flex items-center p-6 lg:px-18 z-20 justify-center"
+    aria-label="Global"
+  >
+    <div class="hidden lg:flex lg:justify-between w-full max-w-1/2">
+      <a
+        href="/login"
+        class="grid max-h-14 rounded-full bg-transparent border-[1px] border-white hover:border-black hover:bg-primary-50 text-white hover:text-black hover:border-transparent transition duration-700 ease-in-out font-bold py-2 px-4 lg:py-3 lg:px-6 md:text-sm lg:text-md"
+        color="primary"
+      >
+        <span> Fazer login </span>
+      </a>
+      <a
+        href="/register"
+        class="grid max-h-14 rounded-full bg-transparent border-[1px] border-white hover:border-black hover:bg-primary-50 text-white hover:text-black hover:border-transparent transition duration-700 ease-in-out font-bold py-2 px-4 lg:py-3 lg:px-6 md:text-sm lg:text-md"
+        color="primary"
+      >
+        <span> Criar uma conta </span>
+      </a>
+    </div>
+
+    <button mat-button class="lg:hidden" [matMenuTriggerFor]="menu">
+      <mat-icon class="text-white text-lg">menu</mat-icon>
+      <mat-menu #menu="matMenu" class="lg:hidden dark:bg-default">
+        <div class="grid gap-4 items-start">
+          <a
+            (click)="scrollToNext('meuElemento')"
+            class="cursor-pointer w-full grid max-h-14 rounded-full bg-transparent border-[1px] border-white hover:border-black hover:bg-primary-50 text-white hover:text-black hover:border-transparent transition duration-700 ease-in-out font-bold py-2 px-4 lg:py-3 lg:px-6 md:text-sm lg:text-md"
+            color="primary"
+          >
+            <span> Inicio </span>
+          </a>
+          <a
+            href="/login"
+            class="w-full grid max-h-14 rounded-full bg-transparent border-[1px] border-white hover:border-black hover:bg-primary-50 text-white hover:text-black hover:border-transparent transition duration-700 ease-in-out font-bold py-2 px-4 lg:py-3 lg:px-6 md:text-sm lg:text-md"
+            color="primary"
+          >
+            <span> Fazer login </span>
+          </a>
+          <a
+            href="/register"
+            class="w-full grid max-h-14 rounded-full bg-transparent border-[1px] border-white hover:border-black hover:bg-primary-50 text-white hover:text-black hover:border-transparent transition duration-700 ease-in-out font-bold py-2 px-4 lg:py-3 lg:px-6 md:text-sm lg:text-md"
+            color="primary"
+          >
+            <span> Criar uma conta </span>
+          </a>
+        </div>
+      </mat-menu>
+    </button>
+  </nav>
+</header>

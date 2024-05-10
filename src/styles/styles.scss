@@ -1,0 +1,39 @@
+.landing-page-card {
+  display: flex;
+  position: relative;
+  left: 0px;
+  height: 300px;
+  transition: 0.4s ease-out;
+}
+
+.landing-page-card:hover {
+  transform: translateX(-40px) translateY(-40px);
+  transition: 0.4s ease-out;
+}
+
+.landing-page-card:hover~.landing-page-card {
+  position: relative;
+}
+
+landing {
+  width: 100%;
+}
+
+@keyframes gradient {
+  0% {background-position: 0% 0%;}
+  25% {background-position: 100% 0%;}
+  50% {background-position: 100% 100%;}
+  75% {background-position: 0% 100%;}
+  100% {background-position: 0% 0%;}
+}
+
+.bg-gradient-animation {
+  background: linear-gradient(45deg, #ffffff, #ffffb5, #ffff86, #cdcd00, #d1d118, #ffffad);
+  background-size: 200% 200%;
+  animation: gradient 8s ease-in-out infinite;
+}
+.bg-gradient-animation:hover {
+  background: linear-gradient(45deg, #319a00, #7dee90, #4a991c, #cdcd00, #51ff00, #4fb436);
+  background-size: 200% 200%;
+  animation: gradient 8s ease-in-out infinite;
+}
