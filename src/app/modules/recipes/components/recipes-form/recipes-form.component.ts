@@ -75,7 +75,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
           .subscribe((res: RecipeInterface): void => {
             this.recipe = res;
 
-            this.form.patchValue({ ...res });
+            this.form.patchValue({ ...res, category: res.category.id });
           });
       }
     });
