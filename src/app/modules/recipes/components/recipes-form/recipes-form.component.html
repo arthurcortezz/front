@@ -45,6 +45,24 @@
             A categoria da receita é obrigatória.
           </mat-error>
         </mat-form-field>
+        <div class="w-full grid h-fit mb-4">
+          <label class="font-bold">Imagem da receita</label>
+          <label for="image" class="custom-file-upload">
+            Escolher arquivo
+          </label>
+          <input
+            id="image"
+            type="file"
+            name="image"
+            accept=".png"
+            style="display: none"
+            (change)="onFileChange($event)"
+          />
+          <p *ngIf="selectedFileName">
+            Arquivo selecionado: {{ selectedFileName }}
+          </p>
+          <p *ngIf="!selectedFileName">Selecione um arquivo de imagem .png</p>
+        </div>
         <div class="flex mb-4 w-full justify-between">
           <h1 class="font-bold text-lg">Ingredientes</h1>
           <button mat-button class="bg-default" (click)="addNewIngredient()">
@@ -66,7 +84,7 @@
           >
             <div [formGroupName]="i" class="grid items-center">
               <div class="flex w-full">
-                <mat-form-field class="w-1/2 pr-4 mb-4">
+                <mat-form-field class="w-full mb-4">
                   <mat-label class="font-bold">Nome</mat-label>
                   <input
                     matInput
@@ -79,26 +97,6 @@
                     O nome do ingrediente é obrigatório.
                   </mat-error>
                 </mat-form-field>
-                <div class="w-1/2 pl-4 grid h-fit mb-4">
-                  <label class="font-bold">Imagem do ingrediente</label>
-                  <label for="image" class="custom-file-upload">
-                    Escolher arquivo
-                  </label>
-                  <input
-                    id="image"
-                    type="file"
-                    name="image"
-                    accept=".png"
-                    style="display: none"
-                    (change)="onFileChange($event)"
-                  />
-                  <p *ngIf="selectedFileName">
-                    Arquivo selecionado: {{ selectedFileName }}
-                  </p>
-                  <p *ngIf="!selectedFileName">
-                    Selecione um arquivo de imagem .png
-                  </p>
-                </div>
               </div>
               <div class="flex w-full">
                 <mat-form-field class="w-1/2 pr-4">
@@ -120,6 +118,7 @@
                   <mat-select
                     formControlName="unityType"
                     placeholder="Unidade de medida"
+                    [(ngModel)]="selectedUnityType"
                   >
                     <mat-option
                       *ngFor="let unityType of unityTypes"
@@ -135,7 +134,7 @@
                 </mat-form-field>
               </div>
               <mat-icon
-                (click)="deleteIngredientForm(i)"
+                (click)="deleteIngredientForm(ingredient.value, i)"
                 class="hover:bg-gray-200 bg-opacity-10 cursor-pointer w-full rounded-lg max-h-12"
                 [svgIcon]="'mat_outline:delete'"
               ></mat-icon>

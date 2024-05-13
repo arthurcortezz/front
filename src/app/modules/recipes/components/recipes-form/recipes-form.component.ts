@@ -9,7 +9,10 @@ import {
 } from '@angular/forms';
 
 import { AcsToastService } from '@acs/services/toast';
-import { RecipeInterface } from '../../recipes.types';
+import {
+  RecipeIngredientInterface,
+  RecipeInterface,
+} from '../../recipes.types';
 import { RecipesService } from '../../recipes.service';
 import { CategoryInterface } from '../../../admin/categories/categories.types';
 import { CategoriesService } from 'src/app/modules/admin/categories/categories.service';
@@ -43,8 +46,9 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   public form: UntypedFormGroup;
   public recipe: RecipeInterface;
   public selectedFileName: string = '';
-  public unityTypes: UnityTypeInterface[];
+  public selectedUnityType: string = '';
   public categories: CategoryInterface[];
+  public unityTypes: UnityTypeInterface[];
 
   private readonly unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -74,6 +78,22 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.unsubscribeAll))
           .subscribe((res: RecipeInterface): void => {
             this.recipe = res;
+            const ingredientsArray = this.form.get(
+              'ingredients'
+            ) as UntypedFormArray;
+            res.ingredients.forEach((ingredient) => {
+              ingredientsArray.push(
+                this.formBuilder.group({
+                  image: ingredient.image,
+                  id: [ingredient.id, [Validators.required]],
+                  name: [ingredient.name, [Validators.required]],
+                  unityType: [ingredient.unityType.id, [Validators.required]],
+                  unityValue: [ingredient.unityValue, [Validators.required]],
+                })
+              );
+              this.selectedUnityType = `${ingredient.unityType.id}`;
+              ingredientsArray.updateValueAndValidity();
+            });
 
             this.form.patchValue({ ...res, category: res.category.id });
           });
@@ -92,6 +112,8 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
+
+  onChangeUnityType(): void {}
 
   handleSaveOrUpdate(): void {
     this.form.disable();
