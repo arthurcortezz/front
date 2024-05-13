@@ -9,10 +9,7 @@ import {
 } from '@angular/forms';
 
 import { AcsToastService } from '@acs/services/toast';
-import {
-  RecipeIngredientInterface,
-  RecipeInterface,
-} from '../../recipes.types';
+import { RecipeInterface } from '../../recipes.types';
 import { RecipesService } from '../../recipes.service';
 import { CategoryInterface } from '../../../admin/categories/categories.types';
 import { CategoriesService } from 'src/app/modules/admin/categories/categories.service';
@@ -45,8 +42,9 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   public id: string;
   public form: UntypedFormGroup;
   public recipe: RecipeInterface;
+  public selectedUnityTypes = [];
+  public selectedFile: string | ArrayBuffer = '';
   public selectedFileName: string = '';
-  public selectedUnityType: string = '';
   public categories: CategoryInterface[];
   public unityTypes: UnityTypeInterface[];
 
@@ -81,17 +79,16 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
             const ingredientsArray = this.form.get(
               'ingredients'
             ) as UntypedFormArray;
-            res.ingredients.forEach((ingredient) => {
+            res.ingredients.forEach((ingredient, index) => {
               ingredientsArray.push(
                 this.formBuilder.group({
-                  image: ingredient.image,
                   id: [ingredient.id, [Validators.required]],
                   name: [ingredient.name, [Validators.required]],
                   unityType: [ingredient.unityType.id, [Validators.required]],
                   unityValue: [ingredient.unityValue, [Validators.required]],
                 })
               );
-              this.selectedUnityType = `${ingredient.unityType.id}`;
+              this.selectedUnityTypes[index] = `${ingredient.unityType.id}`;
               ingredientsArray.updateValueAndValidity();
             });
 
@@ -116,6 +113,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   onChangeUnityType(): void {}
 
   handleSaveOrUpdate(): void {
+    console.log('🚀 ~ RecipesFormComponent ~ selectedFile:', this.selectedFile);
     this.form.disable();
     const formValue = {
       ...this.form.value,
@@ -123,7 +121,11 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
 
     if (this.id) {
       this.service
-        .update(this.id, { ...formValue, id: this.id })
+        .update(this.id, {
+          ...formValue,
+          id: this.id,
+          image: this.selectedFile,
+        })
         .pipe(
           takeUntil(this.unsubscribeAll),
           finalize(() => {
@@ -144,8 +146,17 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
           },
         });
     } else {
+      const formData = new FormData();
+      const blob = new Blob([this.selectedFile], { type: 'image/png' });
+      formData.append('image', blob, this.selectedFileName);
+
+      let recipe = {};
+      for (let key in formValue) {
+        recipe[key] = formValue[key];
+      }
+      formData.append('recipe', JSON.stringify(recipe));
       this.service
-        .create(formValue)
+        .create(formData)
         .pipe(
           takeUntil(this.unsubscribeAll),
           finalize(() => {
@@ -176,7 +187,6 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     const ingredientsArray = this.form.get('ingredients') as UntypedFormArray;
     ingredientsArray.push(
       this.formBuilder.group({
-        image: ['', []],
         name: ['', [Validators.required]],
         unityType: ['', [Validators.required]],
         unityValue: ['', [Validators.required]],
@@ -193,7 +203,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.selectedFileName = file.name;
-      // Agora você pode fazer algo com o arquivo, como enviá-lo para um servidor
+      this.selectedFile = file;
     }
   }
 }

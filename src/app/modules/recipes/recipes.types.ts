@@ -5,6 +5,7 @@ export interface RecipeInterface {
   id: number;
   name: string;
   description: string;
+  image: Blob;
   category: CategoryInterface;
   ingredients: RecipeIngredientInterface[];
   createdAt: Date;
@@ -21,5 +22,4 @@ export interface RecipeIngredientInterface {
   name: string;
   unityType: UnityTypeInterface;
   unityValue: number;
-  image: string;
 }
