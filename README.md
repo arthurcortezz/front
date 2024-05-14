@@ -11,16 +11,5 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
 $ npm start
-
-# production mode
-$ npm start
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
 ```
