@@ -14,38 +14,49 @@
   >
     <ng-container *ngIf="data.title || data.message">
       <div
-        class="flex flex-col items-center mt-4 sm:mt-0 space-y-1 text-center sm:text-left w-full"
+        class="flex flex-col items-center pt-10 sm:mt-0 space-y-1 text-center sm:text-left w-full"
       >
         <ng-container *ngIf="data.icon.name">
           <img
-            class="w-[445px] h-[300px] mb-1.5 mt-10"
+            [ngClass]="{ hidden: !imageLoaded }"
+            class="w-[445px] h-[300px]"
             [src]="data.icon.name"
-            alt=""
+            alt="Imagem da receita"
+            (load)="loadImage()"
+            (error)="console.log($event)"
           />
-        </ng-container>
-
-        <ng-container *ngIf="data.title">
           <div
-            class="text-lg leading-6 font-semibold"
-            [innerHTML]="data.title"
-          ></div>
-        </ng-container>
-        <ng-container *ngIf="data.message">
-          <div
-            class="text-secondary dark:text-gray-50 text-md"
-            [innerHTML]="data.message"
-          ></div>
-        </ng-container>
-        <ng-container *ngIf="data.ingredients.length">
-          <div class="text-secondary dark:text-gray-50 text-lg">
-            Ingredientes:
+            [ngClass]="{ hidden: imageLoaded }"
+            class="flex flex-col justify-center items-center w-[445px] h-[300px]"
+          >
+            <mat-spinner class="w-1/2 h-1/2"> </mat-spinner>
+            <span class="font-bold mt-10">Carregando imagem...</span>
           </div>
-          <div
-            *ngFor="let ingredient of data.ingredients"
-            class="text-secondary dark:text-gray-50 text-md"
-            [innerHTML]="ingredient"
-          ></div>
         </ng-container>
+        <div class="grid w-full justify-center items-center text-center pt-4">
+          <ng-container *ngIf="data.title">
+            <div
+              class="text-lg leading-6 font-semibold"
+              [innerHTML]="data.title"
+            ></div>
+          </ng-container>
+          <ng-container *ngIf="data.message">
+            <div
+              class="text-secondary dark:text-gray-50 text-md"
+              [innerHTML]="data.message"
+            ></div>
+          </ng-container>
+          <ng-container *ngIf="data.ingredients.length">
+            <div class="text-secondary dark:text-gray-50 text-lg pt-4">
+              Ingredientes:
+            </div>
+            <div
+              *ngFor="let ingredient of data.ingredients"
+              class="text-secondary dark:text-gray-50 text-md"
+              [innerHTML]="ingredient"
+            ></div>
+          </ng-container>
+        </div>
       </div>
     </ng-container>
   </div>

@@ -104,7 +104,14 @@ export class RecipesListComponent implements OnInit, OnDestroy {
             color: 'warn',
           },
           ingredients: recipe.ingredients.map(
-            (e) => `${e.unityValue} ${e.unityType.name} - ${e.name}`
+            (e) =>
+              `${
+                e.unityValue % 0.5 === 0
+                  ? e.unityValue > 1
+                    ? `${Math.floor(e.unityValue)} e 1/2`
+                    : '1/2'
+                  : e.unityValue
+              }  ${e.unityType.name} de ${e.name}`
           ),
           actions: {
             confirm: {

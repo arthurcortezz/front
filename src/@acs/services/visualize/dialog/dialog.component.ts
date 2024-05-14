@@ -23,5 +23,11 @@ import { AcsConfirmationConfig } from '@acs/services/confirmation/confirmation.t
   encapsulation: ViewEncapsulation.None,
 })
 export class AcsVisualizeDialogComponent {
+  public imageLoaded = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: AcsConfirmationConfig) {}
+
+  loadImage(): void {
+    console.log('9ajsdoaisd');
+    this.imageLoaded = true;
+  }
 }

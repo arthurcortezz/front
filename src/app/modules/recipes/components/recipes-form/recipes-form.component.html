@@ -108,6 +108,9 @@
                     formControlName="unityValue"
                     matInput
                     type="number"
+                    min="0"
+                    step="0.5"
+                    (input)="checkInput($event.target.value, i)"
                   />
                   <mat-error
                     *ngIf="ingredient.get('unityValue').hasError('required')"
