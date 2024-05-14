@@ -23,7 +23,7 @@ export class UserService {
 
   get(): Observable<UserJWTInterface> {
     return this.httpClient
-      .get<UserJWTInterface>('@acs-api/authentication/profile')
+      .get<UserJWTInterface>('@acs-api/auth/signin-token')
       .pipe(
         tap((response) => {
           this._user.next(response);
@@ -33,7 +33,7 @@ export class UserService {
 
   editProfile(data: UserJWTInterface): Observable<any> {
     return this.httpClient.post<UserJWTInterface>(
-      '@acs-api/authentication/edit-profile',
+      '@acs-api/user/edit-profile',
       data
     );
   }
@@ -44,7 +44,7 @@ export class UserService {
     confirmPassword: string;
   }): Observable<any> {
     return this.httpClient.post<UserJWTInterface>(
-      '@acs-api/authentication/edit-password',
+      '@acs-api/user/edit-password',
       data
     );
   }

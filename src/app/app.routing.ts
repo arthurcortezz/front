@@ -87,6 +87,13 @@ export const appRoutes: Route[] = [
             (m) => m.UnityTypesModule
           ),
       },
+      {
+        path: 'minha-conta',
+        loadChildren: () =>
+          import('./modules/settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
+      },
     ],
   },
 ];

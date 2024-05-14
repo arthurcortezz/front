@@ -76,6 +76,7 @@ export class AuthService {
     return this.httpClient.get('@acs-api/auth/signin-token').pipe(
       catchError(() => of(false)),
       switchMap((response: UserJWTInterface) => {
+        console.log('🚀 ~ AuthService ~ switchMap ~ response:', response);
         this.authenticated = true;
         this.userService.user = response;
 
