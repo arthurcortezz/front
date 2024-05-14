@@ -1,4 +1,4 @@
-<div class="relative flex flex-col w-full h-full bg-default">
+<div class="relative flex flex-col w-full h-full max-h-192">
   <ng-container>
     <div class="absolute top-0 right-0 pt-4 pr-4">
       <button mat-icon-button [matDialogClose]="'cancelled'">
@@ -10,7 +10,7 @@
     </div>
   </ng-container>
   <div
-    class="flex flex-col sm:flex-row flex-auto items-center sm:items-start p-8 pb-6 sm:pb-8"
+    class="flex flex-col items-center sm:items-start p-8 pb-6 sm:pb-8 bg-default"
   >
     <ng-container *ngIf="data.title || data.message">
       <div
@@ -32,7 +32,8 @@
             <span class="font-bold mt-10">Carregando imagem...</span>
           </div>
         </ng-container>
-        <div class="grid w-full justify-center items-center text-center pt-4">
+        <div class="grid w-full justify-center items-center text-center">
+          <mat-divider class="my-4"></mat-divider>
           <ng-container *ngIf="data.title">
             <div
               class="text-lg leading-6 font-semibold"
@@ -45,35 +46,46 @@
               [innerHTML]="data.message"
             ></div>
           </ng-container>
+          <mat-divider class="my-4"></mat-divider>
           <ng-container *ngIf="data.ingredients.length">
-            <div class="text-secondary dark:text-gray-50 text-lg pt-4">
+            <div class="text-secondary dark:text-gray-50 text-lg">
               Ingredientes:
             </div>
             <div
               *ngFor="let ingredient of data.ingredients"
-              class="text-secondary dark:text-gray-50 text-md"
+              class="text-secondary dark:text-gray-50 text-md py-4"
               [innerHTML]="ingredient"
+            ></div>
+          </ng-container>
+          <mat-divider class="my-4"></mat-divider>
+          <ng-container *ngIf="data.steps.length">
+            <div class="text-secondary dark:text-gray-50 text-lg">
+              Modo de preparo:
+            </div>
+            <div
+              *ngFor="let step of data.steps"
+              class="text-secondary dark:text-gray-50 text-md py-4"
+              [innerHTML]="step"
             ></div>
           </ng-container>
         </div>
       </div>
     </ng-container>
+    <ng-container *ngIf="data.actions.confirm.show || data.actions.cancel.show">
+      <div
+        class="flex flex-col items-center justify-center sm:justify-end px-6 py-4 w-full"
+      >
+        <ng-container *ngIf="data.actions.confirm.show">
+          <button
+            class="w-full my-2"
+            mat-flat-button
+            [color]="data.actions.confirm.color"
+            [matDialogClose]="'confirmed'"
+          >
+            {{ data.actions.confirm.label }}
+          </button>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
-
-  <ng-container *ngIf="data.actions.confirm.show || data.actions.cancel.show">
-    <div
-      class="flex flex-col items-center justify-center sm:justify-end px-6 py-4"
-    >
-      <ng-container *ngIf="data.actions.confirm.show">
-        <button
-          class="w-full my-2"
-          mat-flat-button
-          [color]="data.actions.confirm.color"
-          [matDialogClose]="'confirmed'"
-        >
-          {{ data.actions.confirm.label }}
-        </button>
-      </ng-container>
-    </div>
-  </ng-container>
 </div>

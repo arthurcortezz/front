@@ -66,6 +66,45 @@
           </p>
         </div>
         <div class="flex mb-4 w-full justify-between">
+          <h1 class="font-bold text-lg">Modo de preparo</h1>
+          <button mat-button class="bg-default" (click)="addNewStep()">
+            Adicionar +
+          </button>
+        </div>
+        <div
+          class="flex w-full justify-center"
+          *ngIf="!form.get('steps').value.length"
+        >
+          Nenhum modo de preparo cadastrado.
+        </div>
+        <div formArrayName="steps">
+          <div *ngFor="let step of getStepsForm().controls; let i = index">
+            <div [formGroupName]="i" class="grid items-center">
+              <div class="flex w-full">
+                <mat-form-field class="w-full mb-4">
+                  <mat-label class="font-bold">Passo {{ i + 1 }}</mat-label>
+                  <input
+                    matInput
+                    formControlName="name"
+                    [placeholder]="
+                      'Digite uma descrição para o passo ' + (i + 1)
+                    "
+                  />
+                  <mat-error *ngIf="step.get('name').hasError('required')">
+                    A descrição do passo é obrigatório.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <mat-icon
+                (click)="deleteIngredientForm(i)"
+                class="hover:bg-gray-200 bg-opacity-10 cursor-pointer w-full rounded-lg max-h-12"
+                [svgIcon]="'mat_outline:delete'"
+              ></mat-icon>
+              <mat-divider class="my-4"></mat-divider>
+            </div>
+          </div>
+        </div>
+        <div class="flex mb-4 w-full justify-between">
           <h1 class="font-bold text-lg">Ingredientes</h1>
           <button mat-button class="bg-default" (click)="addNewIngredient()">
             Adicionar +

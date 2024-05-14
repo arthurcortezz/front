@@ -113,6 +113,7 @@ export class RecipesListComponent implements OnInit, OnDestroy {
                   : e.unityValue
               }  ${e.unityType.name} de ${e.name}`
           ),
+          steps: recipe.steps.map((e, i) => `${i + 1} - ${e.name}`),
           actions: {
             confirm: {
               show: true,

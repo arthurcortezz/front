@@ -7,15 +7,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AcsVisualizeDialogComponent } from './dialog/dialog.component';
 import { AcsVisualizeService } from './visualize.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [AcsVisualizeDialogComponent],
   imports: [
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatIconModule,
+    SharedModule,
     CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
   ],
   providers: [AcsVisualizeService],
 })

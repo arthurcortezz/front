@@ -15,6 +15,7 @@ export interface AcsConfirmationConfig {
       | 'error';
   };
   ingredients?: string[];
+  steps?: string[];
   actions?: {
     confirm?: {
       show?: boolean;

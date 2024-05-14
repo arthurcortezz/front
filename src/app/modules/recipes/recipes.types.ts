@@ -8,6 +8,7 @@ export interface RecipeInterface {
   image: string;
   category: CategoryInterface;
   ingredients: RecipeIngredientInterface[];
+  steps: RecipeStepInterface[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,4 +23,9 @@ export interface RecipeIngredientInterface {
   name: string;
   unityType: UnityTypeInterface;
   unityValue: number;
+}
+
+export interface RecipeStepInterface {
+  id: number;
+  name: string;
 }

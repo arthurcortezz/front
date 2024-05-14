@@ -67,6 +67,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
       category: ['', [Validators.required]],
       image: ['', [Validators.required]],
       ingredients: this.formBuilder.array([]),
+      steps: this.formBuilder.array([]),
     });
 
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -195,6 +196,10 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     return this.form.get('ingredients') as UntypedFormArray;
   }
 
+  getStepsForm(): UntypedFormArray {
+    return this.form.get('steps') as UntypedFormArray;
+  }
+
   addNewIngredient(): void {
     const ingredientsArray = this.form.get('ingredients') as UntypedFormArray;
     ingredientsArray.push(
@@ -206,10 +211,32 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     );
   }
 
+  addNewStep(): void {
+    const stepsArray = this.form.get('steps') as UntypedFormArray;
+    console.log(
+      '🚀 ~ RecipesFormComponent ~ addNewStep ~ stepsArray:',
+      stepsArray
+    );
+    stepsArray.push(
+      this.formBuilder.group({
+        name: ['', [Validators.required]],
+      })
+    );
+    console.log(
+      '🚀 ~ RecipesFormComponent ~ addNewStep ~ stepsArray:',
+      stepsArray
+    );
+  }
+
   deleteIngredientForm(index: number): void {
     const ingredientsArray = this.form.get('ingredients') as UntypedFormArray;
     ingredientsArray.removeAt(index);
     this.selectedUnityTypes.splice(index, 1);
+  }
+
+  deleteStepForm(index: number): void {
+    const stepsArray = this.form.get('steps') as UntypedFormArray;
+    stepsArray.removeAt(index);
   }
 
   onFileChange(event) {
