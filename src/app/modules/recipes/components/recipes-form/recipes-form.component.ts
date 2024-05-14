@@ -92,6 +92,14 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
               this.selectedUnityTypes[index] = `${ingredient.unityType.id}`;
               ingredientsArray.updateValueAndValidity();
             });
+            res.steps.forEach((step) => {
+              this.getStepsForm().push(
+                this.formBuilder.group({
+                  name: [step.name, [Validators.required]],
+                })
+              );
+              this.getStepsForm().updateValueAndValidity();
+            });
 
             this.selectedFileName = this.getNameOfImage(res.image);
             this.form.patchValue({ ...res, category: res.category.id });
@@ -213,18 +221,10 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
 
   addNewStep(): void {
     const stepsArray = this.form.get('steps') as UntypedFormArray;
-    console.log(
-      '🚀 ~ RecipesFormComponent ~ addNewStep ~ stepsArray:',
-      stepsArray
-    );
     stepsArray.push(
       this.formBuilder.group({
         name: ['', [Validators.required]],
       })
-    );
-    console.log(
-      '🚀 ~ RecipesFormComponent ~ addNewStep ~ stepsArray:',
-      stepsArray
     );
   }
 
