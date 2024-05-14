@@ -2,10 +2,10 @@ import { CategoryInterface } from '../admin/categories/categories.types';
 import { UnityTypeInterface } from '../admin/unity-types/unity-types.types';
 
 export interface RecipeInterface {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  image: Blob;
+  image: string;
   category: CategoryInterface;
   ingredients: RecipeIngredientInterface[];
   createdAt: Date;
@@ -13,7 +13,7 @@ export interface RecipeInterface {
 }
 
 export interface RecipePaginatedInterface {
-  data: RecipeInterface[];
+  rows: RecipeInterface[];
   total: number;
 }
 

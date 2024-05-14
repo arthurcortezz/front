@@ -30,7 +30,7 @@ export class RecipesService {
 
   update(
     id: string,
-    data: RecipeInterface
+    data: FormData
   ): Observable<{ message: string; user: RecipeInterface }> {
     return this.httpClient.put<{ message: string; user: RecipeInterface }>(
       `@acs-api/recipe/${id}`,

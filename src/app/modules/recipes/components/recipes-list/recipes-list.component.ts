@@ -3,7 +3,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AcsConfirmationService } from '@acs/services/confirmation';
 import {
   AcsTableInterface,
   AcsTablePaginatorInterface,
@@ -14,6 +13,8 @@ import { AcsHeaderActionInterface } from '@acs/components/header';
 
 import { RecipesService } from '../../recipes.service';
 import { RecipePaginatedInterface } from '../../recipes.types';
+import { AcsVisualizeService } from '@acs/services/visualize';
+import { AcsConfirmationService } from '@acs/services/confirmation';
 
 @Component({
   selector: 'recipes-list',
@@ -26,25 +27,28 @@ export class RecipesListComponent implements OnInit, OnDestroy {
     title: 'Receitas',
     headers: [
       { name: 'Nome', key: 'name' },
+      { name: 'Ingredientes', key: 'ingredients' },
       { name: 'Criado em', key: 'createdAt' },
       { name: 'Modificado em', key: 'updatedAt' },
     ],
     content: [
       { type: 'field', key: 'name' },
+      { type: 'length', key: 'ingredients' },
       { type: 'timestamp', key: 'createdAt' },
       { type: 'timestamp', key: 'updatedAt' },
     ],
     actions: true,
-    searchable: true,
+    view: true,
+    selection: false,
+    searchable: false,
     searchableConfig: {
       requestPagination: true,
     },
-    selection: true,
-    paginator: true,
+    paginator: false,
     paginatorConfig: {
       requestPagination: true,
     },
-    sortable: true,
+    sortable: false,
     sortConfig: {
       requestPagination: true,
     },
@@ -58,6 +62,7 @@ export class RecipesListComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly service: RecipesService,
     private readonly toastService: AcsToastService,
+    private readonly visualizeService: AcsVisualizeService,
     private readonly confirmationService: AcsConfirmationService
   ) {}
 
@@ -87,6 +92,28 @@ export class RecipesListComponent implements OnInit, OnDestroy {
         } else {
           this.router.navigateByUrl(`receitas/editar/${data.id}`);
         }
+        break;
+      case 'observe':
+        const recipe = this.data.rows.find((e) => e.id === data.id);
+        this.visualizeService.open({
+          title: recipe.name,
+          message: recipe.description,
+          icon: {
+            show: true,
+            name: recipe.image,
+            color: 'warn',
+          },
+          ingredients: recipe.ingredients.map(
+            (e) => `${e.unityValue} ${e.unityType.name} - ${e.name}`
+          ),
+          actions: {
+            confirm: {
+              show: true,
+              label: 'Voltar',
+              color: 'primary',
+            },
+          },
+        });
         break;
       case 'delete':
         const dialogRef = this.confirmationService.open();

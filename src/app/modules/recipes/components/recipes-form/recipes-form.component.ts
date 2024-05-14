@@ -65,6 +65,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       category: ['', [Validators.required]],
+      image: ['', [Validators.required]],
       ingredients: this.formBuilder.array([]),
     });
 
@@ -82,7 +83,6 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
             res.ingredients.forEach((ingredient, index) => {
               ingredientsArray.push(
                 this.formBuilder.group({
-                  id: [ingredient.id, [Validators.required]],
                   name: [ingredient.name, [Validators.required]],
                   unityType: [ingredient.unityType.id, [Validators.required]],
                   unityValue: [ingredient.unityValue, [Validators.required]],
@@ -92,6 +92,7 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
               ingredientsArray.updateValueAndValidity();
             });
 
+            this.selectedFileName = this.getNameOfImage(res.image);
             this.form.patchValue({ ...res, category: res.category.id });
           });
       }
@@ -105,6 +106,17 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  getNameOfImage(imageUrl: string): string {
+    try {
+      let url = new URL(imageUrl);
+      let pathSegments = url.pathname.split('/');
+      return pathSegments[pathSegments.length - 1];
+    } catch (error) {
+      console.error('Erro ao extrair o nome do arquivo da URL', error);
+      return '';
+    }
+  }
+
   ngOnDestroy(): void {
     this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
@@ -113,19 +125,28 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   onChangeUnityType(): void {}
 
   handleSaveOrUpdate(): void {
-    console.log('🚀 ~ RecipesFormComponent ~ selectedFile:', this.selectedFile);
     this.form.disable();
     const formValue = {
       ...this.form.value,
     };
+    delete formValue.image;
+
+    const formData = new FormData();
+    const blob = new Blob([this.selectedFile], { type: 'image/png' });
+    formData.append('image', blob, this.selectedFileName);
+
+    let recipe = {};
+    for (let key in formValue) {
+      recipe[key] = formValue[key];
+    }
+    if (this.id) {
+      recipe = { ...recipe, id: this.id };
+    }
+    formData.append('recipe', JSON.stringify(recipe));
 
     if (this.id) {
       this.service
-        .update(this.id, {
-          ...formValue,
-          id: this.id,
-          image: this.selectedFile,
-        })
+        .update(this.id, formData)
         .pipe(
           takeUntil(this.unsubscribeAll),
           finalize(() => {
@@ -146,15 +167,6 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      const formData = new FormData();
-      const blob = new Blob([this.selectedFile], { type: 'image/png' });
-      formData.append('image', blob, this.selectedFileName);
-
-      let recipe = {};
-      for (let key in formValue) {
-        recipe[key] = formValue[key];
-      }
-      formData.append('recipe', JSON.stringify(recipe));
       this.service
         .create(formData)
         .pipe(
@@ -197,12 +209,14 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
   deleteIngredientForm(index: number): void {
     const ingredientsArray = this.form.get('ingredients') as UntypedFormArray;
     ingredientsArray.removeAt(index);
+    this.selectedUnityTypes.splice(index, 1);
   }
 
   onFileChange(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.selectedFileName = file.name;
+      this.form.get('image').setValue(file.name);
       this.selectedFile = file;
     }
   }

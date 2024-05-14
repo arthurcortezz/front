@@ -35,16 +35,16 @@ export class UnityTypesComponent implements OnInit, OnDestroy {
       { type: 'timestamp', key: 'updatedAt' },
     ],
     actions: true,
-    searchable: true,
+    searchable: false,
     searchableConfig: {
-      requestPagination: true,
+      requestPagination: false,
     },
-    selection: true,
-    paginator: true,
+    selection: false,
+    paginator: false,
     paginatorConfig: {
       requestPagination: true,
     },
-    sortable: true,
+    sortable: false,
     sortConfig: {
       requestPagination: true,
     },
