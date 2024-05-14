@@ -27,7 +27,6 @@ export class AcsVisualizeDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: AcsConfirmationConfig) {}
 
   loadImage(): void {
-    console.log('9ajsdoaisd');
     this.imageLoaded = true;
   }
 }

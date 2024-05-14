@@ -229,14 +229,6 @@ export class RecipesFormComponent implements OnInit, OnDestroy {
       ingredientForm.setValue(1);
     } else if (floatValue % 0.5 !== 0) {
       ingredientForm.setValue(Math.round(floatValue * 2) / 2);
-    } else if (floatValue % 1 === 0) {
-      console.log(
-        '🚀 ~ RecipesFormComponent ~ checkInput ~ floatValue:',
-        floatValue
-      );
-      ingredientForm.setValue(
-        floatValue > 1 ? `${Math.floor(floatValue)} 1/2` : '1/2'
-      );
     }
   }
 }

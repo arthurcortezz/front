@@ -23,7 +23,6 @@
             [src]="data.icon.name"
             alt="Imagem da receita"
             (load)="loadImage()"
-            (error)="console.log($event)"
           />
           <div
             [ngClass]="{ hidden: imageLoaded }"
